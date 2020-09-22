@@ -1,4 +1,4 @@
-package com.example.tryjetpack.adapter
+package com.example.tryjetpack.view.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -15,7 +15,7 @@ class EthnicWearAdapter(var context:Context,var ethnicWearList:ArrayList<Dress>)
     class EthnicViewHolder(var itemView1: View) : RecyclerView.ViewHolder(itemView1) {
         var textView1 = itemView1.priceTextView
         var textView2 = itemView1.nameTextView
-        var imageView1 = itemView1.dressImageView
+      //  var imageView1 = itemView1.dressImageView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EthnicViewHolder {
@@ -28,10 +28,8 @@ class EthnicWearAdapter(var context:Context,var ethnicWearList:ArrayList<Dress>)
     }
 
     override fun onBindViewHolder(holder: EthnicViewHolder, position: Int) {
-
-
         holder.textView1.text = ethnicWearList[position].price
         holder.textView2.text = ethnicWearList[position].name
-        holder.imageView1.setImageDrawable( ethnicWearList[position].imageView)
+      //  holder.imageView1.setImageDrawable( ethnicWearList[position].imageView)
     }
 }

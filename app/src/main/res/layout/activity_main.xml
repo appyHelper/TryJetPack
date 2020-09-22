@@ -5,9 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.activity.MainActivity">
+    <EditText
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/dressEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:text="Add"
+        app:layout_constraintTop_toBottomOf="@id/dressEditText"
+        android:id="@+id/dressAddButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/dressAddedText"
+        app:layout_constraintTop_toBottomOf="@id/dressAddButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="hello"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        app:layout_constraintTop_toBottomOf="@id/dressAddedText"
         android:id="@+id/rvDressList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
 </androidx.constraintlayout.widget.ConstraintLayout>
