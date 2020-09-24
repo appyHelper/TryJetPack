@@ -1,60 +1,23 @@
 package com.example.tryjetpack.repository
 
-import android.content.Context
-import android.util.Log
-import android.widget.ImageView
-import com.example.tryjetpack.R
+
 import com.example.tryjetpack.modal.All
-import com.example.tryjetpack.modal.CatInfo
-import com.example.tryjetpack.modal.Dress
-import com.example.tryjetpack.service.DressNetworkBuilder
+import com.example.tryjetpack.service.DressApi
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlin.collections.ArrayList
-
-class DressRepository() {
-    var dressArrayList =ArrayList<Dress>()
-
-    fun getDressList(context: Context): ArrayList<Dress>? {
+import javax.inject.Inject
 
 
-        dressArrayList.add(Dress("saree","$30"))
-        dressArrayList.add(Dress("saree","$50"))
-        return dressArrayList
+class DressRepository @Inject constructor(val dressApi: DressApi) {
 
+    fun getDressList1():Observable<List<All>>{
 
-//        Observable.create { t ->
-//            Log.d("observable",t.toString())
-//
-//            Observable.fromIterable(dressArrayList).toList()
-//        }toList
-    }
-    fun getDressList2(): Observable<ArrayList<Dress>>? {
-
-         Log.d("inside","repository")
-        dressArrayList.add(Dress("saree","$30"))
-        dressArrayList.add(Dress("saree","$50"))
-        return Observable.just(dressArrayList)
-
-
-//        Observable.create { t ->
-//            Log.d("observable",t.toString())
-//
-//            Observable.fromIterable(dressArrayList).toList()
-//        }toList
-    }
-
-    fun getDressList1():Observable<CatInfo>{
-
-     return   DressNetworkBuilder.getDressRetrofitBuilder().getDressList().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).map {
-        it
+     return   dressApi.getDressList().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).map {
+        it.all
         }
 
     }
 
-    fun getEditTextInput(context: Context,name:String){
-        dressArrayList.add(Dress(name,"35"))
-        Log.d("repo",dressArrayList.toString())
-    }
+
 }

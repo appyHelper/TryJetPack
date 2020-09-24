@@ -1,5 +1,6 @@
 package com.example.tryjetpack.view.activity
 
+import android.app.AppComponentFactory
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -10,58 +11,45 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tryjetpack.R
+import com.example.tryjetpack.di.DaggerDressComponent
+import com.example.tryjetpack.di.DressApiServiceModule
+import com.example.tryjetpack.di.DressComponent
 import com.example.tryjetpack.modal.Dress
 import com.example.tryjetpack.repository.DressRepository
 import com.example.tryjetpack.view.adapter.EthnicWearAdapter
 import com.example.tryjetpack.viewmodel.DressViewModel
+import com.example.tryjetpack.viewmodel.DressViewModelFactory
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity() {
 
-
-
+@Inject lateinit var dressViewModelFactory: DressViewModelFactory
     lateinit var viewModel: DressViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-         val repository =DressRepository()
-        repository.getDressList2()?.observeOn(AndroidSchedulers.mainThread())?.subscribe({
-            Log.d("dress just", it.toString())
-            rvDressList.adapter = EthnicWearAdapter(this, it)
-            rvDressList.layoutManager = LinearLayoutManager(this)
-            it
-        },{
 
-              })
-//     val retrodress =   repository.getDressList1().subscribeOn(Schedulers.io())?.observeOn(AndroidSchedulers.mainThread())?.map {
-//            Log.d("dressviewmodell",it.toString())
-//            //   mutableLiveData.value= it
-//            it
-//        }
+      DaggerDressComponent.builder().dressApiServiceModule(DressApiServiceModule(this.application)).build().inject(this)
+        viewModel=ViewModelProvider(this,dressViewModelFactory).get(DressViewModel::class.java)
+           viewModel.getMutableLiveData().observe(this, Observer {
+               Log.d("main activity","list of all $it")
+               val dressList =ArrayList<Dress>()
+           for(i in it){
+               dressList.add(Dress(i._id,i.text))
+           }
 
-        //Log.d("retrodress",retrodress.toString())
+               Log.d("${this.localClassName}","dress list $dressList")
+               rvDressList.adapter = EthnicWearAdapter(this, dressList)
+         rvDressList.layoutManager = LinearLayoutManager(this)
+           })
 
-        viewModel=ViewModelProvider.NewInstanceFactory().create(DressViewModel::class.java)
-        Log.d("Main","mainactivity")
-        val justdress =
-//        viewModel.getMutableLiveData(this).observe(this, Observer {
-//            Log.d("Main",it.toString())
-////            val observable = Observable.just(it)
-////            observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).map {
-//             //  viewModel.getEditText(this,dressEditText.text.toString())
-//                rvDressList.adapter?.notifyDataSetChanged()
-//           // }
-//            rvDressList.adapter = EthnicWearAdapter(this,it)
-//            rvDressList.layoutManager=LinearLayoutManager(this)
-//        })
         dressAddButton.setOnClickListener {
             hideSoftKeyboard()
-            viewModel.getEditText(this,dressEditText.text.toString())
-//            rvDressList.adapter?.notifyDataSetChanged()
-//            dressAddedText.text=dressEditText.text.toString()
+
         }
 
     }
