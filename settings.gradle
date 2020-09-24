@@ -1,2 +1,3 @@
+include ':cattylibrary'
 include ':app'
 rootProject.name = "TryJetPack"

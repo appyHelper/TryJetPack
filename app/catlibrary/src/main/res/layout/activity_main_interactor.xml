@@ -4,14 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activity.MainActivity">
-
-    <Button
-        android:text="Over to library"
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/dressAddButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
+    tools:context=".MainInteractorActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

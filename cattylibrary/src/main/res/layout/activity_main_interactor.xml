@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activity.MainActivity">
+   >
 
-    <Button
-        android:text="Over to library"
+
+
+    <androidx.recyclerview.widget.RecyclerView
         app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/dressAddButton"
+        android:id="@+id/rvDressList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-
+        android:layout_height="wrap_content" />
 </androidx.constraintlayout.widget.ConstraintLayout>
